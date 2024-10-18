@@ -17,9 +17,11 @@ const Add = ({ token }) => {
   const [subCategory, setSubCategory] = useState("Topwear");
   const [bestseller, setBsetseller] = useState(false);
   const [sizes, setSizes] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const formData = new FormData();
 
@@ -59,6 +61,8 @@ const Add = ({ token }) => {
     } catch (error) {
       console.log(error);
       toast.error(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -283,8 +287,40 @@ const Add = ({ token }) => {
             Add to bestseller
           </label>
         </div>
-        <button type="sumbit" className="w-28 py-3 mt-4 bg-black text-white">
-          ADD
+
+        <button
+          type="submit"
+          className="w-28 py-3 mt-4 bg-black text-white rounded-md"
+          disabled={isLoading}
+        >
+
+          {isLoading ? (
+                <div className="flex items-center justify-center">
+                  <svg
+                    className="animate-spin h-5 w-5 text-white mr-3"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v8H4z"
+                    ></path>
+                  </svg>
+                  Adding...
+                </div>
+              ) : (
+                "ADD"
+              )}
         </button>
       </form>
     </>

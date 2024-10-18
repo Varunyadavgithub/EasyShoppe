@@ -10,9 +10,11 @@ const Login = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       if (currentState === "Sign Up") {
         const response = await axios.post(backendUrl + "/api/v1/user/signup", {
@@ -27,7 +29,7 @@ const Login = () => {
         } else {
           toast.error(response.data.message);
         }
-      }else{
+      } else {
         const response = await axios.post(backendUrl + "/api/v1/user/login", {
           email,
           password,
@@ -43,14 +45,16 @@ const Login = () => {
     } catch (error) {
       console.log(error);
       toast.error(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     if (token) {
-      navigate("/")
+      navigate("/");
     }
-  },[token]);
+  }, [token]);
   return (
     <>
       <form
@@ -107,8 +111,39 @@ const Login = () => {
             </p>
           )}
         </div>
-        <button className="bg-black text-white font-light px-8 py-2 mt-4">
-          {currentState === "Login" ? "Sign In" : "Sign Up"}
+        <button
+          className="bg-black text-white font-light px-8 py-2 mt-4 rounded-md"
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <div className="flex items-center justify-center">
+              <svg
+                className="animate-spin h-5 w-5 text-white mr-3"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8H4z"
+                ></path>
+              </svg>
+              Please wait...
+            </div>
+          ) : currentState === "Login" ? (
+            "Sign In"
+          ) : (
+            "Sign Up"
+          )}
         </button>
       </form>
     </>
