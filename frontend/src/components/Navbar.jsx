@@ -22,9 +22,9 @@ const Navbar = () => {
   };
   return (
     <>
-      <div className="flex items-center justify-between py-5 font-medium">
+      <div className="sticky top-0 shadow-md bg-white flex items-center justify-between px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] py-4 font-medium">
         <Link to={"/"}>
-          <img src={assets.logo} alt="logo" className="w-36" />
+          <img src={assets.logo} alt="logo" className="w-36 md:w-48 p-2" />
         </Link>
         <ul className="hidden sm:flex gap-5 text-sm text-gray-700">
           <NavLink to="/" className="flex flex-col items-center gap-1">
