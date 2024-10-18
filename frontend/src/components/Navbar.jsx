@@ -22,7 +22,7 @@ const Navbar = () => {
   };
   return (
     <>
-      <div className="sticky top-0 shadow-md bg-white flex items-center justify-between px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] py-4 font-medium">
+      <div className="sticky top-0 z-50 shadow-md bg-white flex items-center justify-between px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] py-4 font-medium">
         <Link to={"/"}>
           <img src={assets.logo} alt="logo" className="w-36 md:w-48 p-2" />
         </Link>
@@ -101,7 +101,7 @@ const Navbar = () => {
         </div>
         <div
           className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${
-            visible ? "w-full" : "w-0"
+            visible ? "w-full h-screen" : "w-0"
           }`}
         >
           <div className="flex flex-col text-gray-600">
